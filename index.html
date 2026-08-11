@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#facc15" id="themeColorMeta">
+  <title>OSAKA x TSJ GUIDEBOOK 2026</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800;900&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    /* ================= SYSTEM COLOR VARIABLES & THEMES ================= */
+    :root {
+      /* Dark Theme (Default Body) */
+      --bg-dark: #070a14;
+      --bg-panel: rgba(18, 24, 40, 0.94);
+      --bg-card: #131b2e;
+      --bg-alt: #181528;
+      
+      --neon-rose: #ff2a6d;
+      --neon-rose-glow: rgba(255, 42, 109, 0.55);
+      --neon-blue: #05d9e8;
+      --neon-blue-glow: rgba(5, 217, 232, 0.45);
+      --gold-alt: #f59e0b;
+      --rain-green: #10b981;
+      
+      --text-main: #f8fafc;
+      --text-sub: #cbd5e1;
+      --text-muted: #64748b;
+      --border: rgba(255, 255, 255, 0.12);
+      --nav-bg: rgba(7, 10, 20, 0.96);
+      
+      --nav-h: 70px;
+    }
+
+    /* Light Theme State */
+    body.light-mode {
+      --bg-dark: #f8fafc;
+      --bg-panel: #ffffff;
+      --bg-card: #ffffff;
+      --bg-alt: #f1f5f9;
+      
+      --neon-rose: #ff2a6d;
+      --neon-rose-glow: rgba(255, 42, 109, 0.25);
+      --neon-blue: #0284c7;
+      --neon-blue-glow: rgba(2, 132, 199, 0.25);
+      --gold-alt: #d97706;
+      --rain-green: #059669;
+      
+      --text-main: #0f172a;
+      --text-sub: #334155;
+      --text-muted: #64748b;
+      --border: rgba(15, 23, 42, 0.12);
+      --nav-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    /* PREVENT HORIZONTAL SCROLL */
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden !important;
+      position: relative;
+      touch-action: pan-y;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--bg-dark); color: var(--text-main); padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom)); }
+    
+    #touch-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999; }
+    a { text-decoration: none; color: inherit; }
+    button { border: none; background: none; cursor: pointer; outline: none; }
+
+    @keyframes checkPop {
+      0% { transform: scale(0.8); }
+      50% { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================= COMPACT NEO-BRUTALISM HEADER ================= */
+    header {
+      background: #facc15;
+      border-bottom: 3px solid #0f172a;
+      position: sticky; top: 0; z-index: 1000;
+      padding: max(env(safe-area-inset-top), 10px) 16px 10px; /* 위아래 패딩 축소 */
+      color: #0f172a;
+      box-shadow: 0 4px 0px #0f172a;
+      width: 100%;
+    }
+    .header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    
+    .magazine-title-box { display: flex; flex-direction: column; gap: 0px; }
+    .title-row-1 {
+      font-family: 'Syne', 'Pretendard', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1;
+      color: #0f172a;
+      text-transform: uppercase;
+    }
+    .title-row-2 {
+      font-family: 'Syne', 'Pretendard', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      color: #ff2a6d;
+      text-transform: uppercase;
+    }
+    .sub-brand-desc { font-size: 0.72rem; color: #0f172a; font-weight: 800; margin-top: 3px; letter-spacing: -0.2px; }
+
+    .right-controls { display: flex; align-items: center; gap: 8px; }
+
+    /* Neo-Brutalism Pill Badge */
+    .badge-cyber {
+      background: #ffffff;
+      border: 2.5px solid #0f172a;
+      border-radius: 12px;
+      padding: 5px 10px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: #0f172a;
+      box-shadow: 2.5px 2.5px 0px #0f172a;
+      font-family: 'Space Grotesk', sans-serif;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: #ffffff; border: 2.5px solid #0f172a;
+      color: #0f172a; display: flex; justify-content: center; align-items: center;
+      font-size: 0.95rem; cursor: pointer; box-shadow: 2.5px 2.5px 0px #0f172a;
+      transition: transform 0.15s ease;
+    }
+    .theme-toggle-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #0f172a; }
+
+    .filter-bar { margin-top: 8px; }
+    .btn-cyber-toggle {
+      width: 100%; padding: 8px; background: #ffffff;
+      border: 2px solid #0f172a; border-radius: 10px; color: #0f172a;
+      font-size: 0.78rem; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 6px;
+      box-shadow: 2px 2px 0px #0f172a; transition: all 0.15s ease;
+    }
+    .btn-cyber-toggle:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px #0f172a; }
+    .btn-cyber-toggle.active { background: #34d399; }
+
+    /* TOP DAY TABS */
+    .top-nav {
+      display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px;
+      background: var(--bg-dark); border-bottom: 1px solid var(--border);
+      scrollbar-width: none; position: sticky; top: calc(env(safe-area-inset-top) + 120px); z-index: 990;
+      width: 100%;
+    }
+    .top-nav::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex: 0 0 auto; padding: 8px 16px; border-radius: 14px; font-size: 0.85rem; font-weight: 800;
+      color: var(--text-muted); background: var(--bg-panel); border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: var(--neon-rose); color: #fff; border-color: var(--neon-rose);
+      box-shadow: 0 0 14px var(--neon-rose-glow);
+    }
+
+    .container { padding: 16px; max-width: 600px; margin: 0 auto; width: 100%; overflow-x: hidden; }
+    .section { display: none; width: 100%; }
+    .section.active { display: block; animation: fadeInUp 0.35s ease forwards; }
+
+    /* SWIPE SLIDER FOR DAY PANES */
+    #sec-schedule { overflow: hidden; width: 100%; }
+    .day-slider {
+      display: flex; width: 100%; transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: transform; touch-action: pan-y;
+    }
+    .day-pane {
+      flex: 0 0 100%; width: 100%; max-width: 100%; opacity: 0;
+      transition: opacity 0.35s ease; overflow: hidden; box-sizing: border-box;
+    }
+    .day-pane.active { opacity: 1; }
+    .day-pane:not(.active) { visibility: hidden; height: 0; pointer-events: none; }
+
+    /* EXCHANGE TICKER WIDGET */
+    .exchange-ticker-card {
+      background: var(--bg-panel); border: 1px solid rgba(5, 217, 232, 0.35);
+      border-radius: 18px; padding: 20px; margin-bottom: 20px; width: 100%;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    }
+    .ticker-header { font-size: 0.78rem; color: var(--neon-blue); font-weight: 800; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .live-dot { width: 8px; height: 8px; background: var(--neon-rose); border-radius: 50%; box-shadow: 0 0 10px var(--neon-rose); }
+    .ticker-body { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .currency-pair { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); }
+    .rate-value { font-size: 2.1rem; font-weight: 900; color: #34d399; }
+    .currency-label { font-size: 0.9rem; color: var(--text-sub); font-weight: 700; }
+    .ticker-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; border-top: 1px solid var(--border); padding-top: 10px; }
+    .status-down { color: var(--neon-rose); font-weight: 800; }
+
+    /* BANNER & TIMELINE */
+    .day-banner {
+      background: var(--bg-panel); border: 1px solid var(--border); border-radius: 18px; padding: 22px; margin-bottom: 24px; width: 100%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .day-banner-h2 { font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px; }
+    .day-concept { font-size: 0.88rem; color: var(--neon-blue); font-weight: 800; margin-bottom: 24px; }
+    
+    .timeline { border-left: 2px dashed var(--border); margin-left: 8px; padding-left: 18px; }
+    .tl-item { position: relative; margin-bottom: 18px; font-size: 0.88rem; line-height: 1.5; color: var(--text-sub); }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-item::before { content: ''; position: absolute; left: -23px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--neon-blue); }
+    .tl-time { display: block; color: var(--neon-blue); font-weight: 800; margin-bottom: 4px; font-size: 0.82rem; }
+
+    /* SPOT CARDS */
+    .spot-card {
+      background: var(--bg-panel); border-radius: 18px; padding: 20px; margin-bottom: 16px;
+      border: 1px solid var(--border); transition: all 0.25s ease; position: relative; width: 100%;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    }
+    .spot-card.alt { background: var(--bg-alt); border: 1px dashed var(--gold-alt); }
+    .spot-card.rain-ok { border-left: 4px solid var(--rain-green); }
+
+    .check-btn {
+      position: absolute; top: 16px; right: 16px;
+      width: 36px; height: 34px; border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05); border: 1px solid var(--border);
+      color: var(--text-muted); display: flex; justify-content: center; align-items: center;
+      font-size: 0.9rem; cursor: pointer; transition: all 0.25s ease; z-index: 10;
+    }
+    body.light-mode .check-btn { background: #f1f5f9; }
+    .check-btn.checked {
+      background: var(--neon-rose); border-color: var(--neon-rose); color: #fff;
+      box-shadow: 0 0 12px var(--neon-rose-glow); animation: checkPop 0.3s ease;
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; padding-right: 40px; }
+    .tag { font-size: 0.65rem; padding: 4px 8px; border-radius: 8px; font-weight: 800; color: #fff; background: rgba(0,0,0,0.1); }
+    body.dark-mode .tag { background: rgba(255,255,255,0.08); }
+    .tag.primary { background: var(--neon-rose); color: #fff; }
+    .tag.alt { background: var(--gold-alt); color: #000; }
+    .tag.rain { background: rgba(16, 185, 129, 0.15); color: var(--rain-green); border: 1px solid var(--rain-green); }
+
+    .spot-title { font-size: 1.15rem; color: var(--text-main); margin-bottom: 3px; font-weight: 800; padding-right: 40px; }
+    .spot-jp { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; display: block; }
+    .spot-desc { font-size: 0.88rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 16px; }
+
+    .btn-action {
+      display: flex; justify-content: center; align-items: center; gap: 8px; width: 100%; padding: 12px;
+      border-radius: 12px; font-weight: 800; font-size: 0.88rem; transition: all 0.2s ease; text-decoration: none;
+    }
+    .btn-action.primary { background: var(--neon-rose); color: #fff; box-shadow: 0 4px 15px var(--neon-rose-glow); }
+    .btn-action.alt { background: transparent; color: var(--gold-alt); border: 1px solid var(--gold-alt); }
+
+    /* ACCORDION TRANSPORT TOGGLE */
+    .btn-transport-toggle {
+      width: 100%; margin-top: 10px; padding: 10px; background: rgba(0, 0, 0, 0.03);
+      border: 1px solid var(--border); border-radius: 10px; color: var(--neon-blue);
+      font-size: 0.8rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer;
+    }
+    body.dark-mode .btn-transport-toggle { background: rgba(255, 255, 255, 0.03); }
+    .transport-content {
+      display: none; padding: 12px; margin-top: 8px; background: rgba(0, 0, 0, 0.05);
+      border-radius: 10px; font-size: 0.82rem; line-height: 1.6; border: 1px solid var(--border);
+    }
+    body.dark-mode .transport-content { background: rgba(0, 0, 0, 0.35); }
+    .transport-content.open { display: block; animation: fadeInUp 0.25s ease; }
+    .near-spot-link { color: var(--neon-rose); text-decoration: underline; font-weight: 800; cursor: pointer; }
+
+    /* RECORD SECTION */
+    .record-timeline { position: relative; border-left: 2px solid var(--neon-blue); margin-left: 14px; padding-left: 20px; margin-top: 20px; }
+    .record-card {
+      background: var(--bg-panel); border-radius: 16px; padding: 16px; margin-bottom: 16px;
+      border: 1px solid var(--border); position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .record-card::before {
+      content: ''; position: absolute; left: -27px; top: 20px; width: 10px; height: 10px;
+      border-radius: 50%; background: var(--neon-rose); border: 2px solid var(--bg-dark);
+    }
+    .record-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .record-title { font-size: 1.05rem; font-weight: 800; color: var(--text-main); }
+    .record-edit-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+    .record-select, .record-input-time {
+      background: var(--bg-dark); border: 1px solid var(--border); color: var(--neon-blue);
+      border-radius: 8px; padding: 4px 8px; font-size: 0.78rem; font-weight: 700; outline: none;
+    }
+
+    .add-form-box {
+      background: var(--bg-panel); border: 1px dashed var(--neon-blue); border-radius: 16px; padding: 18px; margin-bottom: 24px;
+    }
+    .form-title { font-size: 0.95rem; font-weight: 800; color: var(--neon-blue); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .form-group { margin-bottom: 10px; }
+    .form-control {
+      width: 100%; padding: 10px 12px; background: var(--bg-dark); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text-main); font-size: 0.85rem; outline: none;
+    }
+    .form-row { display: flex; gap: 8px; }
+    .btn-add-record {
+      width: 100%; padding: 12px; background: var(--neon-blue); color: #fff; border-radius: 10px; font-weight: 800; font-size: 0.9rem; margin-top: 4px;
+    }
+    .btn-finish-trip {
+      width: 100%; padding: 16px; background: var(--neon-rose); color: #fff;
+      border-radius: 16px; font-weight: 800; font-size: 1rem; margin-top: 24px;
+      box-shadow: 0 0 20px var(--neon-rose-glow); display: flex; justify-content: center; align-items: center; gap: 8px;
+    }
+
+    /* POLAROID MODAL */
+    #movie-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(7, 10, 20, 0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      z-index: 100000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px;
+    }
+    .polaroid-card {
+      background: #ffffff; color: #0f172a; padding: 20px 20px 32px; border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8); width: 100%; max-width: 380px; text-align: center;
+      position: relative; animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    .polaroid-img-box {
+      background: #070a14; border-radius: 12px; padding: 20px; color: #fff; margin-bottom: 18px; min-height: 250px;
+      display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; text-align: left;
+      position: relative; overflow: hidden; background-size: cover; background-position: center;
+    }
+    .polaroid-img-overlay {
+      position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%); z-index: 1;
+    }
+    .polaroid-img-content { position: relative; z-index: 2; width: 100%; }
+
+    .upload-photo-btn {
+      margin-bottom: 14px; width: 100%; max-width: 380px; padding: 12px;
+      background: rgba(255, 255, 255, 0.15); border: 1px dashed rgba(255, 255, 255, 0.4);
+      color: #fff; border-radius: 12px; font-size: 0.85rem; font-weight: 700;
+      display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer;
+    }
+
+    .polaroid-title { font-size: 1.35rem; font-weight: 900; color: #0f172a; letter-spacing: -0.5px; font-family: 'Syne', sans-serif; }
+    .polaroid-sub { font-size: 0.82rem; color: #64748b; font-weight: 700; margin-top: 4px; }
+    
+    .btn-download-img {
+      margin-top: 14px; width: 100%; max-width: 380px; padding: 14px; background: var(--neon-rose); color: #fff;
+      border-radius: 12px; font-weight: 800; font-size: 0.95rem; display: flex; justify-content: center; align-items: center; gap: 8px;
+      box-shadow: 0 0 15px var(--neon-rose-glow);
+    }
+
+    /* PHRASEBOOK */
+    .phrase-cat { font-size: 1.1rem; color: var(--neon-blue); font-weight: 800; padding-bottom: 8px; border-bottom: 1px solid var(--border); margin: 24px 0 12px 0; }
+    .phrase-card { background: var(--bg-panel); border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .sit-badge { display: inline-block; font-size: 0.72rem; color: #fff; background: var(--neon-rose); padding: 4px 10px; border-radius: 20px; font-weight: 800; margin-bottom: 10px; }
+    .clerk-box { background: rgba(0,0,0,0.05); border-left: 3px solid var(--text-muted); padding: 10px; border-radius: 0 8px 8px 0; margin-bottom: 12px; }
+    body.dark-mode .clerk-box { background: rgba(0,0,0,0.35); }
+    .clerk-lbl { font-size: 0.68rem; color: var(--text-muted); font-weight: 700; margin-bottom: 3px; }
+    .clerk-txt { font-size: 0.85rem; color: var(--text-main); }
+    .my-box { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .my-jp { font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin-bottom: 3px; }
+    .my-kr { font-size: 0.82rem; color: var(--neon-blue); font-weight: 700; }
+    .btn-audio {
+      background: var(--neon-blue); color: #fff;
+      width: 44px; height: 44px; border-radius: 50%; font-size: 1.1rem; display: flex; justify-content: center;
+      align-items: center; flex-shrink: 0;
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; height: calc(var(--nav-h) + env(safe-area-inset-bottom));
+      background: var(--nav-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 1000;
+      padding-bottom: env(safe-area-inset-bottom);
+      width: 100%;
+    }
+    .nav-item { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--text-muted); gap: 4px; cursor: pointer; }
+    .nav-icon { font-size: 1.2rem; margin: 0; }
+    .nav-lbl { font-size: 0.68rem; font-weight: 800; margin: 0; }
+    .nav-item.active { color: var(--neon-rose); }
+    .nav-item.active .nav-icon { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+  <canvas id="touch-canvas"></canvas>
+
+  <!-- CINEMATIC POLAROID MODAL -->
+  <div id="movie-overlay">
+    <label for="bgPhotoInput" class="upload-photo-btn">
+      <i class="fa-solid fa-image"></i> 📷 여행 사진 배경으로 등록하기
+    </label>
+    <input type="file" id="bgPhotoInput" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+
+    <div class="polaroid-card" id="polaroidCardTarget">
+      <div class="polaroid-img-box" id="polaroidImgBox">
+        <div class="polaroid-img-overlay"></div>
+        <div class="polaroid-img-content">
+          <div style="font-size: 1.25rem; font-weight: 900; color: #fff; font-family: 'Syne', sans-serif;">OSAKA x TSJ GUIDEBOOK 2026</div>
+          <div style="font-size: 0.8rem; color: #05d9e8; margin-top: 4px; font-weight: 800;" id="totalVisitedCount">총 0곳 방문 완료</div>
+          <div style="margin-top: 14px; font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;" id="polaroidDetails"></div>
+        </div>
+      </div>
+      <div class="polaroid-title">OSAKA x TSJ GUIDEBOOK 2026</div>
+      <div class="polaroid-sub">2026.08.12 - 08.16 소중한 발자취</div>
+    </div>
+    
+    <button class="btn-download-img" onclick="downloadMemoriesImage()">
+      <i class="fa-solid fa-download"></i> 추억 카드로 저장하기
+    </button>
+    <button onclick="closeMovieOverlay()" style="margin-top: 14px; color: var(--text-muted); font-size: 0.85rem; font-weight: 700;">닫기</button>
+  </div>
+
+  <!-- HEADER WITH COMPACT SLIM PADDING & REMOVED REDUNDANT 2026 -->
+  <header>
+    <div class="header-top">
+      <div class="magazine-title-box">
+        <div class="title-row-1">OSAKA <span style="color:#ff2a6d;">x</span> TSJ</div>
+        <div class="title-row-2">GUIDEBOOK 2026</div>
+        <div class="sub-brand-desc">난바 & 덴덴타운 서브컬처 탐방 4박 5일</div>
+      </div>
+      
+      <div class="right-controls">
+        <div class="badge-cyber">
+          2026<br>4N5D
+        </div>
+        <!-- Theme Switcher Button -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="화면 테마 변경">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="filter-bar">
+      <button class="btn-cyber-toggle" id="btnFilter">
+        <i class="fa-solid fa-umbrella"></i> ☔ 비 올 때 쾌적한 실내 스폿만 필터링
+      </button>
+    </div>
+  </header>
+
+  <!-- TOP DAY TABS -->
+  <div class="top-nav" id="topNav">
+    <button class="tab-btn active" data-day="day1">Day 1</button>
+    <button class="tab-btn" data-day="day2">Day 2</button>
+    <button class="tab-btn" data-day="day3">Day 3</button>
+    <button class="tab-btn" data-day="day4">Day 4</button>
+    <button class="tab-btn" data-day="day5">Day 5</button>
+  </div>
+
+  <div class="container">
+
+    <!-- ================= 1. INFO SECTION ================= -->
+    <div class="section" id="sec-info">
+      
+      <!-- REAL-TIME EXCHANGE RATE TICKER WIDGET -->
+      <div class="exchange-ticker-card">
+        <div class="ticker-header">
+          <span class="live-dot"></span> LIVE MARKET EXCHANGE RATE
+        </div>
+        <div class="ticker-body">
+          <div class="currency-pair">
+            <span>JPY 100엔 기준</span>
+          </div>
+          <div class="exchange-rate-display">
+            <span class="rate-value">890.22</span> <span class="currency-label">KRW</span>
+          </div>
+        </div>
+        <div class="ticker-footer">
+          <span class="status-down">▼ 2.15원 (-0.24%) 전일 대비</span>
+          <span style="color: var(--text-muted);">실시간 고시</span>
+        </div>
+      </div>
+
+      <div class="day-banner" style="border-color: var(--neon-rose);">
+        <div class="day-banner-h2"><i class="fa-solid fa-plane-departure"></i> 항공권 명세 (AIR SEOUL)</div>
+        <div class="day-concept">인천(ICN T2) ↔ 간사이(KIX T1)</div>
+        <div class="timeline">
+          <div class="tl-item">
+            <span class="tl-time">8월 12일 (수) 출국 [RS713]</span>
+            인천 T2 (13:15) 출발 ➡️ 오사카 T1 (15:15) 도착 [2시간 소요]
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">8월 16일 (일) 귀국 [RS718]</span>
+            오사카 T1 (21:50) 출발 ➡️ 인천 T2 (23:40) 도착 [1시간 50분 소요]
+          </div>
+        </div>
+      </div>
+
+      <div class="day-banner" style="border-color: var(--neon-blue);">
+        <div class="day-banner-h2"><i class="fa-solid fa-hotel"></i> 숙소 명세 (4박 연박)</div>
+        <div class="day-concept">Apartment Hotel 11 Kuromon 4</div>
+        <div class="timeline">
+          <div class="tl-item">
+            <span class="tl-time">주소 & 위치</span>
+            12-4 Kozu 3-chome, Chuo-ku, Osaka (쿠로몬 시장 바로 앞 / 대형마트 인접)
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">체크인 / 체크아웃</span>
+            체크인: 16:00부터 / 체크아웃: 10:00까지
+          </div>
+        </div>
+        <a href="https://maps.google.com/?q=Apartment+Hotel+11+Kuromon+4" target="_blank" class="btn-action primary" style="margin-top: 16px;">
+          <i class="fa-solid fa-map-location-dot"></i> 숙소 구글 맵 열기
+        </a>
+      </div>
+    </div>
+
+    <!-- ================= 2. SCHEDULE SECTION ================= -->
+    <div class="section active" id="sec-schedule">
+      
+      <div class="day-slider" id="daySlider">
+
+        <!-- DAY 1 -->
+        <div class="day-pane active" id="day1">
+          <div class="day-banner">
+            <div class="day-banner-h2">Day 1: 8/12 (수) 입국 & 심야 스캔</div>
+            <div class="day-concept">피규어 숍 마감 전 급습 & 현지인 마트 야간 털기</div>
+            <div class="timeline">
+              <div class="tl-item"><span class="tl-time">15:15 ~ 17:00</span>공항 입국 ➡️ 라피트 ➡️ 난바 11 Kuromon 4 숙소 체크인</div>
+              <div class="tl-item"><span class="tl-time">17:30 ~ 19:30</span>스루가야 난바 등 덴덴타운 영업 마감 전 탐방</div>
+              <div class="tl-item"><span class="tl-time">19:30 ~ 21:00</span>난바 우동 (또는 마츠야) 저녁 식사</div>
+              <div class="tl-item"><span class="tl-time">21:00 ~ 22:30</span>타이토 스테이션 (실내 가챠/크레인)</div>
+              <div class="tl-item"><span class="tl-time">22:30 ~ 23:30</span>라이프 마트 다이코쿠초점 장보기</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-1-1" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-1-1', '스루가야 난바 乙女館', 'Day 1')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 우천 추천</span></div>
+            <h3 class="spot-title">스루가야 난바 乙女館</h3>
+            <span class="spot-jp">駿河屋 難波店 (10:00 - 21:00)</span>
+            <p class="spot-desc">도착 첫날 둘러보기 좋은 대형 성지. 전층이 피규어, 굿즈로 꽉 차 있습니다.</p>
+            <a href="https://maps.google.com/?q=Surugaya+Namba+Building" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>숙소 출발:</strong> 도보 약 320m (4분) / 최단 직선거리</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-1-2')">난바 우동</span> (도보 180m), <span class="near-spot-link" onclick="scrollToSpot('spot-1-4')">타이토 스테이션</span> (도보 220m)</div>
+              <div>💡 <strong>동선 팁:</strong> 체크인 후 짐 놓고 바로 걸어가서 영업 종료(21:00) 전 1등으로 탐방 추천!</div>
+            </div>
+          </div>
+
+          <div class="spot-card" data-id="spot-1-2">
+            <button class="check-btn" onclick="toggleCheck('spot-1-2', '난바 우동', 'Day 1')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 맛집</span><span class="tag">🍜 우동/소바</span></div>
+            <h3 class="spot-title">난바 우동</h3>
+            <span class="spot-jp">なんばうどん</span>
+            <p class="spot-desc">현지 직장인들이 퇴근 후 들르는 가성비 최고의 로컬 우동집. 빠르고 맛있는 식사.</p>
+            <a href="https://maps.google.com/?q=Namba+Udon+Osaka" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>스루가야 출발:</strong> 도보 180m (2분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-1-3')">마츠야 난바점</span> (대체 맛집, 도보 120m)</div>
+              <div>💡 <strong>동선 팁:</strong> 스루가야 구경 후 바로 옆 골목에서 우동 한 그릇 뚝딱하기 완벽한 동선!</div>
+            </div>
+          </div>
+
+          <div class="spot-card alt" data-id="spot-1-3">
+            <button class="check-btn" onclick="toggleCheck('spot-1-3', '마츠야 난바점', 'Day 1')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag alt">대체 맛집</span><span class="tag">🍚 규동/덮밥</span></div>
+            <h3 class="spot-title">마츠야 난바점</h3>
+            <span class="spot-jp">松屋 難波店 (24시간 영업)</span>
+            <p class="spot-desc">늦은 밤 밥집이 닫았다면? 24시간 언제든 키오스크로 주문 가능한 소고기 덮밥.</p>
+            <a href="https://maps.google.com/?q=Matsuya+Namba" target="_blank" class="btn-action alt"><i class="fa-solid fa-code-branch"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>난바 우동 출발:</strong> 도보 120m (1분)</div>
+              <div>💡 <strong>동선 팁:</strong> 우동집 재료 소진 시 바로 맞은편 마츠야에서 덮밥 선택 가능.</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-1-4" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-1-4', '타이토 스테이션 난바점', 'Day 1')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 실내 오락실</span></div>
+            <h3 class="spot-title">타이토 스테이션 난바점</h3>
+            <span class="spot-jp">タイトーステーション 難波店 (10:00 - 23:30)</span>
+            <p class="spot-desc">늦은 밤까지 운영하는 대형 오락실. 최신 가챠와 크레인 기계가 마련되어 있습니다.</p>
+            <a href="https://maps.google.com/?q=Taito+Station+Namba" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>저녁 식사 후:</strong> 도보 150m (2분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-1-5')">라이프 마트</span> (도보 650m 또는 LUUP 3분)</div>
+              <div>💡 <strong>동선 팁:</strong> 저녁 먹고 밤 10시까지 실내 가챠 즐기기 좋습니다.</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-1-5" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-1-5', '라이프 마트 다이코쿠초점', 'Day 1')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 대형 마트</span></div>
+            <h3 class="spot-title">라이프 마트 다이코쿠초점</h3>
+            <span class="spot-jp">ライフ 大国町店 (08:00 - 24:00)</span>
+            <p class="spot-desc">돈키호테 헬게이트를 피하세요. 쾌적한 24시 대형 슈퍼마켓.</p>
+            <a href="https://maps.google.com/?q=LIFE+Daikokucho" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>타이토 출발:</strong> 도보 650m (8분) 또는 🚲 LUUP 자전거 3분</div>
+              <div>📍 <strong>숙소 복귀:</strong> 도보 500m (6분)</div>
+              <div>💡 <strong>동선 팁:</strong> 야식과 음료를 사서 바로 숙소로 걸어 복귀하기 최적 위치!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 2 -->
+        <div class="day-pane" id="day2">
+          <div class="day-banner">
+            <div class="day-banner-h2">Day 2: 8/13 (목) 덴덴타운 딥 다이브</div>
+            <div class="day-concept">피규어, 히든젬, 감성 학용품 집중 공략</div>
+            <div class="timeline">
+              <div class="tl-item"><span class="tl-time">10:30 ~ 13:00</span>정글 오사카, 히어로 완구 연구소 탐방</div>
+              <div class="tl-item"><span class="tl-time">13:00 ~ 14:00</span>카츠동 치요마츠 (또는 라멘 즌도야) 점심</div>
+              <div class="tl-item"><span class="tl-time">14:00 ~ 17:30</span>라신방, 슈퍼 키즈 랜드 (프라모델) 탐방</div>
+              <div class="tl-item"><span class="tl-time">17:30 ~ 19:30</span>난바 로프트 (디자인 문구) 쇼핑</div>
+              <div class="tl-item"><span class="tl-time">20:00 ~ </span>(여유 시) 난바 파크스 야간 산책</div>
+            </div>
+          </div>
+
+          <div class="spot-card" data-id="spot-2-1">
+            <button class="check-btn" onclick="toggleCheck('spot-2-1', '정글 오사카 본점', 'Day 2')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag">🦸‍♂️ 특촬/메카닉</span></div>
+            <h3 class="spot-title">정글 오사카 본점</h3>
+            <span class="spot-jp">ジャングル 大阪日本橋本店 (12:00 - 20:00)</span>
+            <p class="spot-desc">특촬물, 메카닉, 고퀄 완성품 피규어 및 희귀 중고 매물이 완벽하게 정돈된 오타로드 핵심 매장.</p>
+            <a href="https://maps.google.com/?q=Jungle+Osaka+Nipponbashi" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>숙소 출발:</strong> 도보 300m (4분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-2-2')">히어로 완구 연구소</span> (도보 80m), <span class="near-spot-link" onclick="scrollToSpot('spot-2-5')">라신방</span> (도보 120m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card" data-id="spot-2-2">
+            <button class="check-btn" onclick="toggleCheck('spot-2-2', '히어로 완구 연구소', 'Day 2')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag">💎 빈티지/레트로</span></div>
+            <h3 class="spot-title">히어로 완구 연구소</h3>
+            <span class="spot-jp">ヒーロー玩具研究所 (12:00 - 19:00)</span>
+            <p class="spot-desc">1층은 최신 피규어, 2층은 빈티지 소후비 장난감으로 가득한 매니아 성지.</p>
+            <a href="https://maps.google.com/?q=Hero+Gangu+Lab+Nipponbashi" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>정글 출발:</strong> 바로 옆 골목 도보 80m (1분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-2-3')">카츠동 치요마츠</span> (점심, 도보 200m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card" data-id="spot-2-3">
+            <button class="check-btn" onclick="toggleCheck('spot-2-3', '카츠동 치요마츠', 'Day 2')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 맛집</span><span class="tag">🍖 5cm 가츠동</span></div>
+            <h3 class="spot-title">카츠동 치요마츠</h3>
+            <span class="spot-jp">かつ丼 ちよ松</span>
+            <p class="spot-desc">5cm 두께의 압도적인 돼지고기로 유명한 가츠동 맛집.</p>
+            <a href="https://maps.google.com/?q=Katsudon+Chiyomatsu+Dotonbori" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>히어로 완구 출발:</strong> 도보 200m (3분)</div>
+              <div>📍 <strong>대체 맛집:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-2-4')">라멘 즌도야</span> (도보 150m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card alt" data-id="spot-2-4">
+            <button class="check-btn" onclick="toggleCheck('spot-2-4', '라멘 즌도야', 'Day 2')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag alt">대체 맛집</span><span class="tag">🍜 돈코츠 라멘</span></div>
+            <h3 class="spot-title">라멘 즌도야</h3>
+            <span class="spot-jp">らーめん ずんどう屋 大阪本店</span>
+            <p class="spot-desc">치요마츠 웨이팅이 길 시 바로 갈 수 있는 돈코츠 라멘집.</p>
+            <a href="https://maps.google.com/?q=Ramen+Zundoya+Osaka+Honten" target="_blank" class="btn-action alt"><i class="fa-solid fa-code-branch"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>치요마츠 출발:</strong> 도보 150m (2분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-2-5')">라신방</span> (도보 180m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-2-5" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-2-5', '라신방 오사카 본점', 'Day 2')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 건물 내</span></div>
+            <h3 class="spot-title">라신방 오사카 본점</h3>
+            <span class="spot-jp">らしんばん 大阪日本橋店 (11:00 - 20:00)</span>
+            <p class="spot-desc">아크릴 스탠드, 트레이딩 카드, 굿즈 전문 스토어.</p>
+            <a href="https://maps.google.com/?q=Lashinbang+Osaka+Nipponbashi" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>점심 식사 후:</strong> 도보 180m (2분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-2-6')">슈퍼 키즈 랜드</span> (도보 100m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-2-6" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-2-6', '슈퍼 키즈 랜드 캐릭터 관', 'Day 2')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 건물 내</span></div>
+            <h3 class="spot-title">슈퍼 키즈 랜드 캐릭터 관</h3>
+            <span class="spot-jp">スーパーキッズランドキャラクター館 (10:00 - 20:00)</span>
+            <p class="spot-desc">건프라와 프라모델에 특화된 대형 매장.</p>
+            <a href="https://maps.google.com/?q=Super+Kids+Land+Character+Kan" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>라신방 출발:</strong> 도보 100m (1분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-2-7')">난바 로프트</span> (도보 350m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-2-7" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-2-7', '난바 로프트', 'Day 2')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 건물 내</span></div>
+            <h3 class="spot-title">난바 로프트</h3>
+            <span class="spot-jp">なんばロフト (11:00 - 21:00)</span>
+            <p class="spot-desc">일본 최고 수준의 문구, 다이어리, 캐릭터 학용품.</p>
+            <a href="https://maps.google.com/?q=Namba+Loft" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>키즈랜드 출발:</strong> 도보 350m (5분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-2-8')">난바 파크스</span> (도보 400m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card alt" data-id="spot-2-8">
+            <button class="check-btn" onclick="toggleCheck('spot-2-8', '난바 파크스', 'Day 2')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag alt">여유 시 추천</span><span class="tag">🌃 야간 산책/쇼핑</span></div>
+            <h3 class="spot-title">난바 파크스</h3>
+            <span class="spot-jp">なんばパークス</span>
+            <p class="spot-desc">협곡 디자인의 아름다운 야경 쇼핑몰.</p>
+            <a href="https://maps.google.com/?q=Namba+Parks" target="_blank" class="btn-action alt"><i class="fa-solid fa-code-branch"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>로프트 출발:</strong> 도보 400m (5분)</div>
+              <div>💡 <strong>동선 팁:</strong> Day 2 일정의 피날레로 야경 산책하기 좋은 곳!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 3 -->
+        <div class="day-pane" id="day3">
+          <div class="day-banner">
+            <div class="day-banner-h2">Day 3: 8/14 (금) 신사이바시 플래그십</div>
+            <div class="day-concept">비 와도 안심! 지하도 완벽 연계 대형 브랜드 스토어 탐방</div>
+            <div class="timeline">
+              <div class="tl-item"><span class="tl-time">11:00 ~ 13:30</span>신사이바시 PARCO 6F (캡콤, 지브리, 크레용신짱)</div>
+              <div class="tl-item"><span class="tl-time">13:30 ~ 14:30</span>코하쿠 (또는 쿠시카츠 다루마) 점심</div>
+              <div class="tl-item"><span class="tl-time">14:30 ~ 16:30</span>다이마루 9F 포켓몬 센터 DX & 도큐핸즈</div>
+              <div class="tl-item"><span class="tl-time">16:30 ~ 18:30</span>BIGSTEP 반다이 오피셜 가챠 숍</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-3-1" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-3-1', '캡콤 스토어 오사카', 'Day 3')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 지하도 연계</span></div>
+            <h3 class="spot-title">캡콤 스토어 오사카</h3>
+            <span class="spot-jp">カプコンストアオーサカ (PARCO 6F)</span>
+            <p class="spot-desc">몬스터헌터, 바이오하자드 등 캡콤 한정판 굿즈와 피규어 존.</p>
+            <a href="https://maps.google.com/?q=Capcom+Store+Osaka" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>숙소/난바 출발:</strong> 지하철 미도스지선 난바 ➡️ 신사이바시역 하차 (1정거장, 지하도 직접 연결)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-3-2')">코하쿠 PARCO점</span> (B2F), <span class="near-spot-link" onclick="scrollToSpot('spot-3-4')">포켓몬 센터 DX</span> (연결 통로 2분)</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-3-2" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-3-2', '코하쿠 PARCO점', 'Day 3')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 맛집</span><span class="tag rain">☔ 파르코 지하</span></div>
+            <h3 class="spot-title">코하쿠 PARCO점</h3>
+            <span class="spot-jp">赤白 心斎橋パルコ店</span>
+            <p class="spot-desc">파르코 B2F 위치. 프렌치 퓨전 오뎅으로 일본 2030에게 폭발적인 인기.</p>
+            <a href="https://maps.google.com/?q=Kohaku+Shinsaibashi+Parco" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>캡콤 스토어 출발:</strong> 건물 내 엘리베이터로 B2F 이동 (1분)</div>
+              <div>📍 <strong>대체 맛집:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-3-3')">쿠시카츠 다루마</span> (아케이드 도보 250m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card alt rain-ok" data-id="spot-3-3" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-3-3', '쿠시카츠 다루마 신사이바시점', 'Day 3')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag alt">대체 맛집</span><span class="tag rain">☔ 아케이드 연계</span></div>
+            <h3 class="spot-title">쿠시카츠 다루마 신사이바시점</h3>
+            <span class="spot-jp">串かつだるま 心斎橋店</span>
+            <p class="spot-desc">넓고 쾌적한 실내에서 편하게 주문하는 오사카 명물 튀김 꼬치.</p>
+            <a href="https://maps.google.com/?q=Kushikatsu+Daruma+Shinsaibashi" target="_blank" class="btn-action alt"><i class="fa-solid fa-code-branch"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>PARCO 출발:</strong> 신사이바시 아케이드 상가 도보 250m (3분)</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-3-4" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-3-4', '포켓몬 센터 오사카 DX', 'Day 3')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 백화점 내</span></div>
+            <h3 class="spot-title">포켓몬 센터 오사카 DX</h3>
+            <span class="spot-jp">ポケモンセンターオーサカDX</span>
+            <p class="spot-desc">파르코 6층과 다이마루 9층 연계. 초대형 포켓몬 센터.</p>
+            <a href="https://maps.google.com/?q=Pokemon+Center+Osaka+DX" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>PARCO 6F 출발:</strong> 건물 다리 연결통로로 다이마루 9F 이동 (2분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-3-5')">도큐핸즈</span> (도보 100m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-3-5" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-3-5', '도큐핸즈 신사이바시점', 'Day 3')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 쇼핑몰 내</span></div>
+            <h3 class="spot-title">도큐핸즈 신사이바시점</h3>
+            <span class="spot-jp">東急ハンズ 心斎橋店</span>
+            <p class="spot-desc">거대한 잡화/학용품/디자인 문구의 성지.</p>
+            <a href="https://maps.google.com/?q=Tokyu+Hands+Shinsaibashi" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>포켓몬 센터 출발:</strong> 파르코 건물 내 바로 연결 (1분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-3-6')">BIGSTEP 반다이 가챠</span> (도보 350m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-3-6" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-3-6', '가샤폰 반다이 (BIGSTEP)', 'Day 3')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 쇼핑몰 내</span></div>
+            <h3 class="spot-title">가샤폰 반다이 (BIGSTEP)</h3>
+            <span class="spot-jp">ガシャポンバンダイ BIGSTEP店</span>
+            <p class="spot-desc">반다이 공식 스토어. 수백 대의 캡슐 머신 세팅.</p>
+            <a href="https://maps.google.com/?q=Gashapon+Bandai+Official+Shop+Shinsaibashi+Bigstep" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>PARCO 출발:</strong> 아메리카무라 방향 도보 350m (4분)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 4 -->
+        <div class="day-pane" id="day4">
+          <div class="day-banner">
+            <div class="day-banner-h2">Day 4: 8/15 (토) 우메다 메가 스케일</div>
+            <div class="day-concept">수천 대의 가챠와 박물관급 빈티지 피규어 탐색</div>
+            <div class="timeline">
+              <div class="tl-item"><span class="tl-time">10:30 ~ 13:00</span>HEP FIVE 6층 초대형 '가샤폰 데파트'</div>
+              <div class="tl-item"><span class="tl-time">13:00 ~ 14:00</span>오코노미야키 키지 (또는 카메 스시) 점심</div>
+              <div class="tl-item"><span class="tl-time">14:00 ~ 16:30</span>만다라케 우메다점 (레트로/희귀품)</div>
+              <div class="tl-item"><span class="tl-time">16:30 ~ 18:30</span>요도바시 카메라 하비관 6F & 키디랜드 탐방</div>
+              <div class="tl-item"><span class="tl-time">19:00 ~ </span>(여유 시) 우메다 스카이 빌딩 야경</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-4-1" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-4-1', '가샤폰 no 데파트 (HEP FIVE)', 'Day 4')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 쇼핑몰 내</span></div>
+            <h3 class="spot-title">가샤폰 no 데파트 (HEP FIVE)</h3>
+            <span class="spot-jp">ガシャポンのデパート (HEP FIVE 6F)</span>
+            <p class="spot-desc">수천 대의 캡슐 머신이 펼쳐진 최대 가챠 파라다이스.</p>
+            <a href="https://maps.google.com/?q=Gashapon+no+Depato+HEP+FIVE" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>난바/숙소 출발:</strong> 지하철 미도스지선 난바 ➡️ 우메다역 하차 (3정거장, 지하도 직접 연결)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-4-4')">만다라케 우메다</span> (도보 450m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card" data-id="spot-4-2">
+            <button class="check-btn" onclick="toggleCheck('spot-4-2', '오코노미야키 키지', 'Day 4')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 맛집</span><span class="tag">🍳 오코노미야키</span></div>
+            <h3 class="spot-title">오코노미야키 키지</h3>
+            <span class="spot-jp">きじ 本店</span>
+            <p class="spot-desc">우메다 식당가 '타키미코지' 오사카 정통 오코노미야키.</p>
+            <a href="https://maps.google.com/?q=Okonomiyaki+Kiji+Umeda" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>HEP FIVE 출발:</strong> 우메다 지하도 타고 스카이빌딩 지하 '타키미코지' 이동 (도보 700m)</div>
+              <div>📍 <strong>대체 맛집:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-4-3')">카메 스시</span> (도보 500m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card alt" data-id="spot-4-3">
+            <button class="check-btn" onclick="toggleCheck('spot-4-3', '카메 스시', 'Day 4')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag alt">대체 맛집</span><span class="tag">🍣 스시</span></div>
+            <h3 class="spot-title">카메 스시</h3>
+            <span class="spot-jp">亀すし 総本店</span>
+            <p class="spot-desc">우메다 골목 가성비 최고 현지 스시집.</p>
+            <a href="https://maps.google.com/?q=Kame+Sushi+Sohonten" target="_blank" class="btn-action alt"><i class="fa-solid fa-code-branch"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>HEP FIVE 출발:</strong> 골목 상가 도보 300m (4분)</div>
+            </div>
+          </div>
+
+          <div class="spot-card" data-id="spot-4-4">
+            <button class="check-btn" onclick="toggleCheck('spot-4-4', '만다라케 우메다점', 'Day 4')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag">👑 레트로/빈티지</span></div>
+            <h3 class="spot-title">만다라케 우메다점</h3>
+            <span class="spot-jp">まんだらけ 梅田店</span>
+            <p class="spot-desc">고전 장난감, 동인지, 희귀 아이템의 보고.</p>
+            <a href="https://maps.google.com/?q=Mandarake+Umeda" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>식사 후:</strong> 도보 450m (6분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-4-5')">요도바시 카메라</span> (도보 550m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-4-5" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-4-5', '요도바시 카메라 우메다', 'Day 4')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 건물 내</span></div>
+            <h3 class="spot-title">요도바시 카메라 우메다</h3>
+            <span class="spot-jp">ヨドバシカメラ 梅田 6F</span>
+            <p class="spot-desc">6층 전체 건프라, 피규어, 공구 하비 매장.</p>
+            <a href="https://maps.google.com/?q=Yodobashi+Camera+Umeda" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>만다라케 출발:</strong> 도보 550m (7분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-4-6')">키디랜드 우메다</span> (지하 연결통로 도보 200m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card rain-ok" data-id="spot-4-6" data-rain="true">
+            <button class="check-btn" onclick="toggleCheck('spot-4-6', '키디랜드 오사카 우메다점', 'Day 4')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag rain">☔ 지하도 연계</span></div>
+            <h3 class="spot-title">키디랜드 오사카 우메다점</h3>
+            <span class="spot-jp">キデイランド 大阪梅田店</span>
+            <p class="spot-desc">한큐 산반가 위치 캐릭터 굿즈/문구 천국.</p>
+            <a href="https://maps.google.com/?q=Kiddy+Land+Osaka+Umeda" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>요도바시 출발:</strong> 한큐 산반가 지하 연결 통로 이용 (도보 200m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card alt" data-id="spot-4-7">
+            <button class="check-btn" onclick="toggleCheck('spot-4-7', '우메다 스카이 빌딩', 'Day 4')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag alt">여유 시 추천</span><span class="tag">🌃 전망대 야경</span></div>
+            <h3 class="spot-title">우메다 스카이 빌딩</h3>
+            <span class="spot-jp">梅田スカイビル</span>
+            <p class="spot-desc">공중정원 전망대 탁 트인 야경 스폿.</p>
+            <a href="https://maps.google.com/?q=Umeda+Sky+Building" target="_blank" class="btn-action alt"><i class="fa-solid fa-code-branch"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>키지 오코노미야키 출발:</strong> 같은 건물 상층부 엘리베이터 이동 (1분)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 5 -->
+        <div class="day-pane" id="day5">
+          <div class="day-banner">
+            <div class="day-banner-h2">Day 5: 8/16 (일) 꽉 채운 마지막 날</div>
+            <div class="day-concept">밤 9시 50분 비행기! 저녁 6시까지 알차게 즐기기</div>
+            <div class="timeline">
+              <div class="tl-item"><span class="tl-time">10:00</span>호텔 체크아웃 ➡️ 난바역 코인락커 짐 보관</div>
+              <div class="tl-item"><span class="tl-time">10:30 ~ 12:30</span>스탠더드 북스토어 (히든 감성 문구/잡화)</div>
+              <div class="tl-item"><span class="tl-time">12:30 ~ 14:00</span>에비스바시 사보 (또는 쿠로몬 시장) 점심</div>
+              <div class="tl-item"><span class="tl-time">14:00 ~ 16:30</span>덴덴타운 최종 싹쓸이 (아쉬웠던 물건 줍줍)</div>
+              <div class="tl-item"><span class="tl-time">16:30 ~ 18:00</span>마루후쿠 커피점 (레트로 킷사텐 휴식)</div>
+              <div class="tl-item"><span class="tl-time">18:30 ~ </span>난바역 라피트 탑승 ➡️ 간사이 공항(T1) 이동</div>
+            </div>
+          </div>
+
+          <div class="spot-card" data-id="spot-5-1">
+            <button class="check-btn" onclick="toggleCheck('spot-5-1', '스탠더드 북스토어', 'Day 5')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 추천</span><span class="tag">📚 감성 문구</span></div>
+            <h3 class="spot-title">스탠더드 북스토어</h3>
+            <span class="spot-jp">スタンダードブックストア</span>
+            <p class="spot-desc">디자인 문구, 소품, 서적 히든젬 공간.</p>
+            <a href="https://maps.google.com/?q=Standard+Bookstore+Nipponbashi" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>난바역 짐 보관 후:</strong> 도보 350m (5분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-5-2')">에비스바시 사보</span> (도보 350m), <span class="near-spot-link" onclick="scrollToSpot('spot-5-3')">쿠로몬 시장</span> (도보 250m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card" data-id="spot-5-2">
+            <button class="check-btn" onclick="toggleCheck('spot-5-2', '에비스바시 사보', 'Day 5')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">우선 맛집</span><span class="tag">🥢 소바/우동</span></div>
+            <h3 class="spot-title">에비스바시 사보</h3>
+            <span class="spot-jp">戎橋茶房</span>
+            <p class="spot-desc">난바역 근처 조용하고 깔끔한 소바집.</p>
+            <a href="https://maps.google.com/?q=Ebisubashi+Sabo+Namba" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>스탠더드 북스토어 출발:</strong> 도보 350m (4분)</div>
+              <div>📍 <strong>인근 추천:</strong> <span class="near-spot-link" onclick="scrollToSpot('spot-5-4')">마루후쿠 커피점</span> (도보 200m)</div>
+            </div>
+          </div>
+
+          <div class="spot-card alt" data-id="spot-5-3">
+            <button class="check-btn" onclick="toggleCheck('spot-5-3', '쿠로몬 시장', 'Day 5')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag alt">대체 맛집</span><span class="tag">🍢 길거리 음식</span></div>
+            <h3 class="spot-title">쿠로몬 시장</h3>
+            <span class="spot-jp">黒門市場</span>
+            <p class="spot-desc">참치 꼬치, 가리비 구이 등 길거리 로컬 음식.</p>
+            <a href="https://maps.google.com/?q=Kuromon+Market" target="_blank" class="btn-action alt"><i class="fa-solid fa-code-branch"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>스탠더드 북스토어 출발:</strong> 도보 250m (3분)</div>
+            </div>
+          </div>
+
+          <div class="spot-card" data-id="spot-5-4">
+            <button class="check-btn" onclick="toggleCheck('spot-5-4', '마루후쿠 커피점 (센니치마에 본점)', 'Day 5')"><i class="fa-solid fa-check"></i></button>
+            <div class="tags"><span class="tag primary">마지막 휴식</span><span class="tag">☕ 레트로 카페</span></div>
+            <h3 class="spot-title">마루후쿠 커피점 (센니치마에 본점)</h3>
+            <span class="spot-jp">丸福珈琲店 千日前本店</span>
+            <p class="spot-desc">1934년 창업 앤틱 킷사텐. 진한 커피 휴식.</p>
+            <a href="https://maps.google.com/?q=Marufuku+Coffee+Sennichimae" target="_blank" class="btn-action primary"><i class="fa-solid fa-location-arrow"></i> 구글 맵 길찾기</a>
+            
+            <button class="btn-transport-toggle" onclick="toggleTransport(this)">
+              <span>🚶‍♂️ 이동수단 & 주변 추천 경로</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="transport-content">
+              <div>📍 <strong>소바 식사 후:</strong> 도보 200m (3분)</div>
+              <div>📍 <strong>공항 이동:</strong> 카페 휴식 후 난바역 라피트 승강장까지 도보 400m (5분)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= 3. PHRASEBOOK SECTION ================= -->
+    <div class="section" id="sec-phrases">
+      <div class="day-banner">
+        <div class="day-banner-h2">🗣️ 오사카 실전 회화 가이드</div>
+        <div class="day-concept">스피커(🔊) 버튼을 누르면 현지 발음이 재생됩니다!</div>
+      </div>
+
+      <h3 class="phrase-cat"><i class="fa-solid fa-hand-wave"></i> 기본 & 인사 (생존 필수)</h3>
+      <div class="phrase-card">
+        <div class="sit-badge">길을 비켜달라고 할 때 / 점원 부를 때</div>
+        <div class="my-box">
+          <div><div class="my-jp">すみません。</div><div class="my-kr">스미마센 (실례합니다 / 저기요)</div></div>
+          <button class="btn-audio" data-jp="すみません">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">감사함을 표현할 때</div>
+        <div class="my-box">
+          <div><div class="my-jp">ありがとうございます。</div><div class="my-kr">아리가토-고자이마스 (감사합니다)</div></div>
+          <button class="btn-audio" data-jp="ありがとうございます">🔊</button>
+        </div>
+      </div>
+
+      <h3 class="phrase-cat"><i class="fa-solid fa-utensils"></i> 식당에서 (인원/주문/계산)</h3>
+      <div class="phrase-card">
+        <div class="sit-badge">가게 진입 시 인원수 묻고 답하기</div>
+        <div class="clerk-box"><div class="clerk-lbl">점원: 何名様ですか？ (난메이사마 데스카? / 몇 분이신가요?)</div></div>
+        <div class="my-box">
+          <div><div class="my-jp">2人です。</div><div class="my-kr">후타리 데스 (2명입니다.)</div></div>
+          <button class="btn-audio" data-jp="ふたりです">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">메뉴판 요청하기</div>
+        <div class="my-box">
+          <div><div class="my-jp">英語のメニューはありますか？</div><div class="my-kr">에이고노 메뉴-와 아리마스카? (영어 메뉴판 있나요?)</div></div>
+          <button class="btn-audio" data-jp="英語のメニューはありますか">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">메뉴를 손가락으로 가리키며 주문할 때</div>
+        <div class="clerk-box"><div class="clerk-lbl">점원: ご注文はお決まりですか？ (주문하시겠어요?)</div></div>
+        <div class="my-box">
+          <div><div class="my-jp">これとこれをお願いします。</div><div class="my-kr">코레토 코레오 오네가이시마스 (이것과 이것 주세요.)</div></div>
+          <button class="btn-audio" data-jp="これとこれをお願いします">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">다 먹고 계산할 때</div>
+        <div class="my-box">
+          <div><div class="my-jp">お会計お願いします。</div><div class="my-kr">오카이케이 오네가이시마스 (계산 부탁합니다.)</div></div>
+          <button class="btn-audio" data-jp="お会計お願いします">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">결제 방식 대답하기 (따로/같이)</div>
+        <div class="clerk-box"><div class="clerk-lbl">점원: お支払いはご一緒ですか？ (같이 계산하시나요?)</div></div>
+        <div class="my-box" style="margin-bottom: 10px;">
+          <div><div class="my-jp">別々で。</div><div class="my-kr">베츠베츠데 (따로따로 계산할게요.)</div></div>
+          <button class="btn-audio" data-jp="別々で">🔊</button>
+        </div>
+        <div class="my-box">
+          <div><div class="my-jp">一緒で。</div><div class="my-kr">잇ショで (같이 계산할게요.)</div></div>
+          <button class="btn-audio" data-jp="一緒で">🔊</button>
+        </div>
+      </div>
+
+      <h3 class="phrase-cat"><i class="fa-solid fa-box-open"></i> 피규어 / 굿즈 샵에서</h3>
+      <div class="phrase-card">
+        <div class="sit-badge">장식장 안에 있는 상품 꺼내달라고 할 때</div>
+        <div class="my-box">
+          <div><div class="my-jp">ショーケースの中のこれを見せてください。</div><div class="my-kr">쇼-케-스노 나카노 코레오 미세테 쿠다사이</div></div>
+          <button class="btn-audio" data-jp="ショーケースの中のこれを見せてください">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">디피 상품 말고 새 상품(새것)이 있는지 물을 때</div>
+        <div class="my-box">
+          <div><div class="my-jp">これの新しいもの（在庫）はありますか？</div><div class="my-kr">코레노 아타라시이 모노(자이코)와 아리마스카?</div></div>
+          <button class="btn-audio" data-jp="これの新しいものはありますか">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">중고 제품이 '미개봉' 상태인지 확인할 때</div>
+        <div class="my-box">
+          <div><div class="my-jp">これは未開封ですか？</div><div class="my-kr">코레와 미카이후- 데스카? (이거 미개봉인가요?)</div></div>
+          <button class="btn-audio" data-jp="これは未開封ですか">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">면세(Tax-Free) 요청 시</div>
+        <div class="clerk-box"><div class="clerk-lbl">점원: パスポートをご提示ください。 (여권 제시해 주세요)</div></div>
+        <div class="my-box">
+          <div><div class="my-jp">免税はできますか？</div><div class="my-kr">멘제이와 데키마스카? (면세 되나요?)</div></div>
+          <button class="btn-audio" data-jp="免税はできますか">🔊</button>
+        </div>
+      </div>
+
+      <h3 class="phrase-cat"><i class="fa-solid fa-coins"></i> 가챠 / 마트 / 드럭스토어</h3>
+      <div class="phrase-card">
+        <div class="sit-badge">가챠 기계에 동전이 먹었을 때(걸렸을 때)</div>
+        <div class="clerk-box"><div class="clerk-lbl">점원: すぐ確認します。 (스구 카쿠닌시마스 / 바로 확인해 드릴게요)</div></div>
+        <div class="my-box">
+          <div><div class="my-jp">お金がつまってしまいました。</div><div class="my-kr">오카네가 츠맛테 시마이마시타</div></div>
+          <button class="btn-audio" data-jp="お金がつまってしまいました">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">지폐를 동전 교환기에서 바꾸고 싶을 때</div>
+        <div class="my-box">
+          <div><div class="my-jp">両替機はどこですか？</div><div class="my-kr">료-가에키와 도코데스카?</div></div>
+          <button class="btn-audio" data-jp="両替機はどこですか">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">계산 시 비닐봉투가 필요 없을 때 (거절)</div>
+        <div class="clerk-box"><div class="clerk-lbl">점원: レジ袋はおつけしますか？ (봉투 드릴까요?)</div></div>
+        <div class="my-box" style="margin-bottom: 10px;">
+          <div><div class="my-jp">袋は結構です。</div><div class="my-kr">후쿠로와 켓코-데스 (봉투는 괜찮습니다/필요없습니다.)</div></div>
+          <button class="btn-audio" data-jp="袋は結構です">🔊</button>
+        </div>
+        <div class="my-box">
+          <div><div class="my-jp">袋をお願いします。</div><div class="my-kr">후쿠로오 오네가이시마스 (봉투 주세요.)</div></div>
+          <button class="btn-audio" data-jp="袋をお願いします">🔊</button>
+        </div>
+      </div>
+      
+      <h3 class="phrase-cat"><i class="fa-solid fa-map-location"></i> 길 찾기 & 교통</h3>
+      <div class="phrase-card">
+        <div class="sit-badge">역이나 목적지의 위치를 물어볼 때</div>
+        <div class="my-box">
+          <div><div class="my-jp">〇〇駅はどこですか？</div><div class="my-kr">OO에키와 도코데스카? (OO역은 어디인가요?)</div></div>
+          <button class="btn-audio" data-jp="駅はどこですか">🔊</button>
+        </div>
+      </div>
+      <div class="phrase-card">
+        <div class="sit-badge">이 전철이 난바로 가는지 확인할 때</div>
+        <div class="my-box">
+          <div><div class="my-jp">これは難波に行きますか？</div><div class="my-kr">코레와 난바니 이키마스카?</div></div>
+          <button class="btn-audio" data-jp="これは難波に行きますか">🔊</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 4. TIPS SECTION ================= -->
+    <div class="section" id="sec-tips">
+      <div class="day-banner">
+        <div class="day-banner-h2">💡 오사카 여행 현지 꿀팁</div>
+        <div class="day-concept">알아두면 무조건 이득! 변수를 통제하는 스마트한 기술</div>
+      </div>
+
+      <div class="spot-card">
+        <div class="spot-title" style="color: var(--neon-blue);"><i class="fa-brands fa-apple"></i> 교통카드 (애플페이 파스모/이코카)</div>
+        <p class="spot-desc">실물 이코카(ICOCA) 카드를 살 필요가 없습니다. 아이폰 <strong>지갑(Wallet) 앱</strong>에서 교통카드 추가를 누르고 'ICOCA' 또는 'PASMO'를 발급받은 뒤 현대카드로 충전하세요. 개찰구에 핸드폰만 대면 0.1초 만에 통과됩니다.</p>
+      </div>
+
+      <div class="spot-card">
+        <div class="spot-title" style="color: var(--neon-blue);"><i class="fa-solid fa-bicycle"></i> 전동 킥보드/자전거 (LUUP) 활용</div>
+        <p class="spot-desc">비가 오지 않는다면, 일본 전역에서 쓰이는 <strong>LUUP(루프) 앱</strong>을 한국에서 미리 다운로드하고 카드 등록을 해두세요. 난바 ↔ 덴덴타운 구석구석을 누빌 때 걷는 피로 없이 최강의 기동력을 자랑합니다.</p>
+      </div>
+
+      <div class="spot-card">
+        <div class="spot-title" style="color: var(--neon-blue);"><i class="fa-solid fa-umbrella"></i> 우천 시 지하도 방어막 (난바 워크)</div>
+        <p class="spot-desc">난바역부터 닛폰바시, 신사이바시까지는 거대한 지하상가 <strong>난바 워크(Namba Walk)</strong>로 촘촘히 연결되어 있습니다. 비가 올 때는 무조건 구글맵에서 지하도 출입구를 찾아 지하로 이동하세요. 우산 없이도 쾌적하게 쇼핑몰에 진입할 수 있습니다.</p>
+      </div>
+
+      <div class="spot-card">
+        <div class="spot-title" style="color: var(--neon-blue);"><i class="fa-solid fa-coins"></i> 동전 지갑 & 면세(Tax-Free) 주의사항</div>
+        <p class="spot-desc"><strong>1. 동전 장전:</strong> 개인 렌탈 쇼케이스나 가챠 머신은 100엔짜리만 먹습니다. 100엔을 항상 10~20개 정도 동전 지갑에 보유하세요.<br><br><strong>2. 면세 포장:</strong> 드럭스토어에서 산 '소비재(간식, 화장품)'는 면세 봉투를 뜯으면 안 되지만, <strong>피규어, 프라모델, 문구 같은 '일반 물품'은 면세받아도 일본 내에서 박스를 개봉해도 무방합니다.</strong> (부피를 줄이기 위해 박스를 버리고 올 수 있습니다.)</p>
+      </div>
+
+      <div class="spot-card">
+        <div class="spot-title" style="color: var(--neon-blue);"><i class="fa-solid fa-camera"></i> 구글 번역기 (이미지 렌즈)</div>
+        <p class="spot-desc">식당에 영어 메뉴판이 없거나, 가챠 기계에 붙은 설명서, 주의사항을 읽어야 할 때 <strong>구글 번역(Google Translate) 앱의 '카메라' 기능</strong>을 켜서 비추면 화면에 바로 한글이 덮어씌워져 번역됩니다. 파파고 이미지 번역보다 훨씬 빠르고 직관적입니다.</p>
+      </div>
+    </div>
+
+    <!-- ================= 5. RECORD MAP SECTION ================= -->
+    <div class="section" id="sec-record">
+      <div class="day-banner">
+        <div class="day-banner-h2">🗺️ 나만의 오사카 여행 기록지</div>
+        <div class="day-concept">실시간 방문 기록 & 소중한 발자취 보관소</div>
+      </div>
+
+      <!-- Add Form -->
+      <div class="add-form-box">
+        <div class="form-title"><i class="fa-solid fa-plus-circle"></i> 새로운 방문지 직접 기록하기</div>
+        <div class="form-row">
+          <select id="customDay" class="form-control" style="flex: 1;">
+            <option value="Day 1">Day 1 (8/12)</option>
+            <option value="Day 2">Day 2 (8/13)</option>
+            <option value="Day 3">Day 3 (8/14)</option>
+            <option value="Day 4">Day 4 (8/15)</option>
+            <option value="Day 5">Day 5 (8/16)</option>
+          </select>
+          <input type="time" id="customTime" class="form-control" style="flex: 1;" value="14:00">
+        </div>
+        <div class="form-group" style="margin-top: 8px;">
+          <input type="text" id="customName" class="form-control" placeholder="장소명 / 가게 이름 입력 (예: 골목 안 예쁜 카페)">
+        </div>
+        <button class="btn-add-record" onclick="addCustomRecord()"><i class="fa-solid fa-plus"></i> 기록지에 추가하기</button>
+      </div>
+
+      <!-- Record Timeline Container -->
+      <div class="record-timeline" id="recordListContainer"></div>
+
+      <!-- Trip Finish Button -->
+      <button class="btn-finish-trip" onclick="playFinishAnimation()">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> ✨ 나의 오사카 여행 기록 완성하기
+      </button>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom-nav">
+    <div class="nav-item" data-target="sec-info"><i class="fa-solid fa-passport nav-icon"></i><span class="nav-lbl">정보</span></div>
+    <div class="nav-item active" data-target="sec-schedule"><i class="fa-solid fa-calendar-check nav-icon"></i><span class="nav-lbl">일정</span></div>
+    <div class="nav-item" data-target="sec-phrases"><i class="fa-solid fa-language nav-icon"></i><span class="nav-lbl">회화</span></div>
+    <div class="nav-item" data-target="sec-tips"><i class="fa-solid fa-lightbulb nav-icon"></i><span class="nav-lbl">꿀팁</span></div>
+    <div class="nav-item" data-target="sec-record"><i class="fa-solid fa-map-location-dot nav-icon"></i><span class="nav-lbl">기록지</span></div>
+  </nav>
+
+  <!-- JAVASCRIPT & INTERACTION ENGINE -->
+  <script>
+    let visitedRecords = [];
+
+    // Theme Switcher Logic
+    function initTheme() {
+      const savedTheme = localStorage.getItem('TSJ_OSAKA_THEME');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+        document.getElementById('themeToggleBtn').innerHTML = '<i class="fa-solid fa-sun"></i>';
+        document.getElementById('themeColorMeta').setAttribute('content', '#f8fafc');
+      } else {
+        document.body.classList.remove('light-mode');
+        document.getElementById('themeToggleBtn').innerHTML = '<i class="fa-solid fa-moon"></i>';
+        document.getElementById('themeColorMeta').setAttribute('content', '#070a14');
+      }
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-mode');
+      const btn = document.getElementById('themeToggleBtn');
+      const meta = document.getElementById('themeColorMeta');
+      
+      if (isLight) {
+        btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        meta.setAttribute('content', '#f8fafc');
+        localStorage.setItem('TSJ_OSAKA_THEME', 'light');
+      } else {
+        btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        meta.setAttribute('content', '#070a14');
+        localStorage.setItem('TSJ_OSAKA_THEME', 'dark');
+      }
+    }
+
+    function loadSavedRecords() {
+      const saved = localStorage.getItem('TSJ_OSAKA_VISITED');
+      if (saved) {
+        try {
+          visitedRecords = JSON.parse(saved);
+          visitedRecords.forEach(r => {
+            const card = document.querySelector(`.spot-card[data-id="${r.id}"]`);
+            if (card) {
+              const btn = card.querySelector('.check-btn');
+              if (btn) btn.classList.add('checked');
+            }
+          });
+        } catch(e) { console.error(e); }
+      }
+    }
+
+    function saveRecordsToStorage() {
+      localStorage.setItem('TSJ_OSAKA_VISITED', JSON.stringify(visitedRecords));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      initTheme();
+
+      const canvas = document.getElementById('touch-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      class Particle {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.size = Math.random() * 2 + 1;
+          this.speedX = (Math.random() - 0.5) * 2;
+          this.speedY = (Math.random() - 0.5) * 2;
+          this.color = Math.random() > 0.5 ? '#ff2a6d' : '#05d9e8';
+          this.alpha = 0.7;
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          this.alpha -= 0.04;
+        }
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = this.alpha;
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      function handleTouch(e) {
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        const y = e.touches ? e.touches[0].clientY : e.clientY;
+        for (let i = 0; i < 3; i++) {
+          particles.push(new Particle(x, y));
+        }
+      }
+
+      window.addEventListener('touchstart', handleTouch, {passive: true});
+      window.addEventListener('mousedown', handleTouch);
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+          if (particles[i].alpha <= 0) {
+            particles.splice(i, 1);
+            i--;
+          }
+        }
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+
+      // Bottom Nav Logic
+      const bottomNavs = document.querySelectorAll('.nav-item');
+      const sections = document.querySelectorAll('.section');
+      const topNavContainer = document.getElementById('topNav');
+      const btnFilter = document.getElementById('btnFilter');
+
+      bottomNavs.forEach(nav => {
+        nav.addEventListener('click', () => {
+          bottomNavs.forEach(n => n.classList.remove('active'));
+          nav.classList.add('active');
+
+          const targetSec = nav.dataset.target;
+          sections.forEach(sec => sec.classList.remove('active'));
+          document.getElementById(targetSec).classList.add('active');
+
+          if(targetSec === 'sec-schedule') {
+            topNavContainer.style.display = 'flex';
+            btnFilter.style.display = 'flex';
+          } else {
+            topNavContainer.style.display = 'none';
+            btnFilter.style.display = 'none';
+          }
+
+          if(targetSec === 'sec-record') {
+            renderRecordList();
+          }
+          
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+
+      // Day Tabs & Touch Swipe Logic
+      const dayTabs = document.querySelectorAll('.tab-btn');
+      const dayPanes = document.querySelectorAll('.day-pane');
+      const daySlider = document.getElementById('daySlider');
+      let currentDayIndex = 0;
+
+      function switchDayPane(index) {
+        if(index < 0 || index >= dayPanes.length) return;
+        currentDayIndex = index;
+
+        dayTabs.forEach((t, i) => t.classList.toggle('active', i === index));
+        dayPanes.forEach((p, i) => p.classList.toggle('active', i === index));
+
+        daySlider.style.transform = `translateX(-${index * 100}%)`;
+
+        dayTabs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      dayTabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => switchDayPane(index));
+      });
+
+      const scheduleSec = document.getElementById('sec-schedule');
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      scheduleSec.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, {passive: true});
+
+      scheduleSec.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, {passive: true});
+
+      function handleSwipe() {
+        const swipeThreshold = 50;
+        if (touchEndX < touchStartX - swipeThreshold) {
+          if(currentDayIndex < dayPanes.length - 1) switchDayPane(currentDayIndex + 1);
+        }
+        if (touchEndX > touchStartX + swipeThreshold) {
+          if(currentDayIndex > 0) switchDayPane(currentDayIndex - 1);
+        }
+      }
+
+      // Rain Filter
+      let isRain = false;
+      if(btnFilter) {
+        btnFilter.addEventListener('click', function() {
+          isRain = !isRain;
+          this.innerHTML = isRain ? '<i class="fa-solid fa-check"></i> ☔ 우천 추천 스폿만 보는 중' : '<i class="fa-solid fa-umbrella"></i> ☔ 비 올 때 쾌적한 실내 스폿만 필터링';
+          this.classList.toggle('active', isRain);
+          
+          document.querySelectorAll('.spot-card').forEach(card => {
+            if (isRain) {
+              card.style.display = card.dataset.rain === 'true' ? 'block' : 'none';
+            } else {
+              card.style.display = 'block';
+            }
+          });
+        });
+      }
+
+      // TTS Audio
+      document.querySelectorAll('.btn-audio').forEach(btn => {
+        btn.addEventListener('click', function() {
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const msg = new SpeechSynthesisUtterance(this.dataset.jp);
+            msg.lang = 'ja-JP';
+            msg.rate = 0.85;
+            window.speechSynthesis.speak(msg);
+            
+            const originalHTML = this.innerHTML;
+            this.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            this.style.background = '#fff';
+            
+            setTimeout(() => {
+              this.innerHTML = originalHTML;
+              this.style.background = 'var(--neon-blue)';
+            }, 1200);
+          }
+        });
+      });
+
+      loadSavedRecords();
+
+    });
+
+    function toggleTransport(btn) {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('.fa-chevron-down, .fa-chevron-up');
+      const isOpen = content.classList.toggle('open');
+      
+      if(icon) {
+        icon.className = isOpen ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down';
+      }
+    }
+
+    // Scroll to Spot Cleanly
+    function scrollToSpot(spotId) {
+      const targetCard = document.querySelector(`.spot-card[data-id="${spotId}"]`);
+      if(targetCard) {
+        const targetPane = targetCard.closest('.day-pane');
+        if (targetPane) {
+          const dayPanes = Array.from(document.querySelectorAll('.day-pane'));
+          const paneIndex = dayPanes.indexOf(targetPane);
+          
+          const dayTabs = document.querySelectorAll('.tab-btn');
+          if (paneIndex !== -1 && dayTabs[paneIndex]) {
+            dayTabs[paneIndex].click();
+          }
+        }
+
+        setTimeout(() => {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 120);
+      }
+    }
+
+    function toggleCheck(id, name, defaultDay) {
+      const card = document.querySelector(`.spot-card[data-id="${id}"]`);
+      if(!card) return;
+
+      const btn = card.querySelector('.check-btn');
+      const isChecked = btn.classList.toggle('checked');
+
+      if(isChecked) {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const currentTime = `${hours}:${minutes}`;
+
+        if(!visitedRecords.some(r => r.id === id)) {
+          visitedRecords.push({ id, name, day: defaultDay, time: currentTime, custom: false });
+        }
+      } else {
+        visitedRecords = visitedRecords.filter(r => r.id !== id);
+      }
+
+      sortVisitedRecords();
+      saveRecordsToStorage();
+    }
+
+    function addCustomRecord() {
+      const day = document.getElementById('customDay').value;
+      const time = document.getElementById('customTime').value;
+      const name = document.getElementById('customName').value.trim();
+
+      if(!name) {
+        alert("장소명을 입력해주세요!");
+        return;
+      }
+
+      const customId = 'custom-' + Date.now();
+      visitedRecords.push({ id: customId, name, day, time, custom: true });
+      sortVisitedRecords();
+      saveRecordsToStorage();
+
+      document.getElementById('customName').value = '';
+      renderRecordList();
+    }
+
+    function updateRecordDay(id, newDay) {
+      const record = visitedRecords.find(r => r.id === id);
+      if(record) {
+        record.day = newDay;
+        sortVisitedRecords();
+        saveRecordsToStorage();
+        renderRecordList();
+      }
+    }
+
+    function updateRecordTime(id, newTime) {
+      const record = visitedRecords.find(r => r.id === id);
+      if(record) {
+        record.time = newTime;
+        sortVisitedRecords();
+        saveRecordsToStorage();
+        renderRecordList();
+      }
+    }
+
+    function deleteRecord(id) {
+      visitedRecords = visitedRecords.filter(r => r.id !== id);
+      const card = document.querySelector(`.spot-card[data-id="${id}"]`);
+      if(card) {
+        const btn = card.querySelector('.check-btn');
+        if(btn) btn.classList.remove('checked');
+      }
+      saveRecordsToStorage();
+      renderRecordList();
+    }
+
+    function sortVisitedRecords() {
+      visitedRecords.sort((a, b) => {
+        if (a.day !== b.day) return a.day.localeCompare(b.day);
+        return a.time.localeCompare(b.time);
+      });
+    }
+
+    function renderRecordList() {
+      const container = document.getElementById('recordListContainer');
+      if(visitedRecords.length === 0) {
+        container.innerHTML = `
+          <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px 0; margin-left: -20px;">
+            일정에서 <i class="fa-solid fa-check" style="color: var(--neon-rose);"></i> 체크 마크를 누르는 순간 실시간 시간으로 여기에 기록지가 작성됩니다!
+          </p>`;
+        return;
+      }
+
+      let html = '';
+      visitedRecords.forEach(r => {
+        html += `
+          <div class="record-card">
+            <div style="flex: 1;">
+              <div class="record-header-row">
+                <div class="record-title">${r.name}</div>
+                <button onclick="deleteRecord('${r.id}')" style="color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-trash-can"></i></button>
+              </div>
+              <div class="record-edit-row">
+                <select class="record-select" onchange="updateRecordDay('${r.id}', this.value)">
+                  <option value="Day 1" ${r.day === 'Day 1' ? 'selected' : ''}>Day 1 (8/12)</option>
+                  <option value="Day 2" ${r.day === 'Day 2' ? 'selected' : ''}>Day 2 (8/13)</option>
+                  <option value="Day 3" ${r.day === 'Day 3' ? 'selected' : ''}>Day 3 (8/14)</option>
+                  <option value="Day 4" ${r.day === 'Day 4' ? 'selected' : ''}>Day 4 (8/15)</option>
+                  <option value="Day 5" ${r.day === 'Day 5' ? 'selected' : ''}>Day 5 (8/16)</option>
+                </select>
+                <input type="time" class="record-input-time" value="${r.time}" onchange="updateRecordTime('${r.id}', this.value)">
+              </div>
+            </div>
+          </div>`;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function handlePhotoUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const imgBox = document.getElementById('polaroidImgBox');
+          imgBox.style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function playFinishAnimation() {
+      if(visitedRecords.length === 0) {
+        alert("기록지에 최소 1개 이상의 장소를 체크해 주세요!");
+        return;
+      }
+
+      const overlay = document.getElementById('movie-overlay');
+      const countTxt = document.getElementById('totalVisitedCount');
+      const detailsTxt = document.getElementById('polaroidDetails');
+
+      countTxt.innerText = `총 ${visitedRecords.length}곳의 발자취 기록 완료!`;
+
+      let detailsHtml = '';
+      visitedRecords.slice(0, 5).forEach(r => {
+        detailsHtml += `<div>📍 [${r.day} ${r.time}] ${r.name}</div>`;
+      });
+      if(visitedRecords.length > 5) {
+        detailsHtml += `<div style="margin-top:2px; opacity:0.8;">외 ${visitedRecords.length - 5}곳 추가 방문...</div>`;
+      }
+
+      detailsTxt.innerHTML = detailsHtml;
+      overlay.style.display = 'flex';
+    }
+
+    function closeMovieOverlay() {
+      document.getElementById('movie-overlay').style.display = 'none';
+    }
+
+    function downloadMemoriesImage() {
+      const target = document.getElementById('polaroidCardTarget');
+      html2canvas(target, { backgroundColor: null, scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'OSAKA_TSJ_TRIP_MEMORIES.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
